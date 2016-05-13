@@ -1,0 +1,13 @@
+import java.awt.geom.Point2D;
+
+
+public class AbstractCharacter extends AbstractMover {
+	
+	protected Point2D startPoint;
+	
+	public AbstractCharacter (Point2D startPoint) {
+		super(startPoint);
+		this.startPoint = startPoint;
+	}
+
+}

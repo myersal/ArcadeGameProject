@@ -1,0 +1,21 @@
+
+public abstract class AbstractEnemy extends AbstractCharacter {
+
+	protected LocalEnvironment world;
+	public AbstractEnemy(LocalEnvironment w, int x, int y) {
+		super(x,y);
+		this.world = w;
+	}
+	public abstract void move();
+	
+	/**
+	 * 
+	 * Kills this enemy.
+	 *
+	 */
+	public void die(){
+		this.world.getLevel()[super.yLoc][super.xLoc]=0;
+		this.world.repaint();
+	}
+	public abstract int getType();
+}

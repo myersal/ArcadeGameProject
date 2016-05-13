@@ -1,0 +1,413 @@
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.event.ActionEvent;
+import java.awt.event.KeyEvent;
+import java.io.File;
+import java.io.IOException;
+import java.util.Scanner;
+
+import javax.swing.AbstractAction;
+import javax.swing.Box;
+import javax.swing.BoxLayout;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.KeyStroke;
+
+/**
+ * The main class for your arcade game.
+ * 
+ * You can design your game any way you like, but make the game start by running
+ * main here.
+ * 
+ * Also don't forget to write javadocs for your classes and functions!
+ * 
+ * @author Buffalo and @auther Goebelag
+ *
+ */
+public class Main {
+	// width of frame
+	private static final int FRAME_WIDTH = 600;
+	// height of frame
+	private static final int FRAME_HEIGTH = 500;
+	// width of block
+	private static final int BLOCK_WIDTH = FRAME_WIDTH / 15;
+	// height of block
+	private static final int BLOCK_HEIGHT = FRAME_HEIGTH / 10;
+	// double array representing the gameboard with ints that represent what is
+	// in each spot
+	private static int[][] currentLevel;
+	// boolean to tell if the player can move
+	private static boolean canMove;
+	// Gap between the scoreboard and LocalEnviroment
+	private final static int GAP = 10;
+	// a long that keeps track of time in order to implement timer
+	public static long startTime;
+
+	/**
+	 * @param args
+	 *            main method runs the program
+	 */
+	public static void main(String[] args) {
+		// creates the currentlevel that will be 15 blocks long and 10 blocks
+		// high
+		currentLevel = new int[10][15];
+		try {
+			loadLevel("level1");
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		for (int i = 0; i < currentLevel.length; i++) {
+			for (int j = 0; j < currentLevel[i].length; j++) {
+				System.out.println(currentLevel[i][j]);
+			}
+		}
+
+		JFrame frame = new JFrame();
+
+		// frame.setSize(FRAME_WIDTH + 20, FRAME_HEIGTH + 40);
+		frame.setTitle("DIGGER");
+		JPanel panel = new JPanel();
+		canMove = true;
+
+		final LocalEnvironment world = new LocalEnvironment(frame, currentLevel);
+		final Scoreboard scoreBoard = new Scoreboard(frame);
+
+		/**
+		 * 
+		 * @author goebelag
+		 *
+		 *         changes level when the button U is pressed
+		 */
+		class UPressAction extends AbstractAction {
+			private JFrame frame;
+			private LocalEnvironment world;
+			private int currentLevelnumber = 1;
+
+			// loads a level
+			public UPressAction(JFrame frame, LocalEnvironment world) {
+				this.frame = frame;
+				this.world = world;
+
+			}
+
+			/**
+			 * @param - ActionEvent e when the event occurs (the U button is
+			 *        pressed) the level switches to a new viable level
+			 */
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// loadnext level
+				System.out.println("you pressed U");
+
+				try {
+					if (this.currentLevelnumber < 3) {
+						this.currentLevelnumber++;
+					} else {
+						this.currentLevelnumber = 1;
+					}
+
+					this.world.changeLevelTo(loadLevel("level"
+							+ currentLevelnumber));
+
+					this.frame.repaint();
+				} catch (IOException exception) {
+					// TODO Auto-generated catch-block stub.
+					exception.printStackTrace();
+				}
+
+			}
+
+		}
+		/**
+		 * 
+		 * @author goebelag
+		 * 
+		 *         Changes levels inversely when the button D is pressed
+		 *
+		 */
+		class DPressAction extends AbstractAction {
+			private JFrame frame;
+			private LocalEnvironment world;
+			private int currentLevelnumber = 1;
+
+			public DPressAction(JFrame frame, LocalEnvironment world) {
+				this.frame = frame;
+				this.world = world;
+
+			}
+
+			/**
+			 * @param - ActionEvent e when the button is pressed the leve
+			 *        lchanges backwards to a viable level
+			 */
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// loadnext level
+				System.out.println("you pressed U");
+
+				try {
+					if (this.currentLevelnumber > 1) {
+						this.currentLevelnumber--;
+					} else {
+						this.currentLevelnumber = 3;
+					}
+
+					this.world.changeLevelTo(loadLevel("level"
+							+ currentLevelnumber));
+
+					this.frame.repaint();
+				} catch (IOException exception) {
+					// TODO Auto-generated catch-block stub.
+					exception.printStackTrace();
+				}
+
+			}
+
+		}
+		/**
+		 * 
+		 * @author goebelag
+		 * 
+		 *         moves the player up when the up arrow is pressed
+		 *
+		 */
+		class UpPressAction extends AbstractAction {
+
+			/**
+			 * if the player can move and has a space above it, it will move up
+			 * and update the board
+			 */
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// move hero up
+				if (canMove) {
+					canMove = false;
+					Main.startTime = System.currentTimeMillis();
+					System.out.println("you pressed Up");
+					int iOfPlayer = world.player.getYLoc();
+					int jOfPlayer = world.player.getXLoc();
+					if (iOfPlayer > 0) {
+						// Checks the next cell for a emerald and eats it if so.
+						if (currentLevel[iOfPlayer - 1][jOfPlayer] == 2)
+							scoreBoard.collectEmerald();
+						// Moves the player and removes dirt
+						currentLevel[iOfPlayer][jOfPlayer] = 0;
+						currentLevel[iOfPlayer - 1][jOfPlayer] = 3;
+						world.repaint();
+
+					}
+					;
+				}
+
+			}
+
+		}
+		/**
+		 * 
+		 * @author goebelag
+		 * 
+		 *         moves down when the down arrow is pressed
+		 * 
+		 *
+		 */
+		class DownPressAction extends AbstractAction {
+
+			/**
+			 * if canMove = true then the player moves if there is an empty
+			 * space below it and updates the world
+			 */
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// move hero down
+				if (canMove) {
+					canMove = false;
+					Main.startTime = System.currentTimeMillis();
+					System.out.println("you pressed Down");
+					int iOfPlayer = world.player.getYLoc();
+					int jOfPlayer = world.player.getXLoc();
+					if (iOfPlayer < currentLevel.length - 1) {
+						// Checks the next cell for a emerald and eats it if so.
+						if (currentLevel[iOfPlayer + 1][jOfPlayer] == 2)
+							scoreBoard.collectEmerald();
+						// Moves the player and removes dirt
+						currentLevel[iOfPlayer][jOfPlayer] = 0;
+						currentLevel[iOfPlayer + 1][jOfPlayer] = 3;
+						world.repaint();
+
+					}
+
+				}
+
+			}
+
+		}
+		/**
+		 * 
+		 * @author goebelag
+		 * 
+		 *         Fmoves the player left when the left button is pressed
+		 *
+		 */
+		class LeftPressAction extends AbstractAction {
+
+			/**
+			 * if canMove = true and there is an empty space to the left of the
+			 * player then the player moves left and updates the current state
+			 * of the game
+			 */
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// move hero left
+				if (canMove) {
+					canMove = false;
+					Main.startTime = System.currentTimeMillis();
+					System.out.println("you pressed left");
+					int iOfPlayer = world.player.getYLoc();
+					int jOfPlayer = world.player.getXLoc();
+					if (jOfPlayer > 0) {
+						// Checks the next cell for a emerald and eats it if so.
+						if (currentLevel[iOfPlayer][jOfPlayer - 1] == 2)
+							scoreBoard.collectEmerald();
+						// Moves the player and removes dirt
+						currentLevel[iOfPlayer][jOfPlayer] = 0;
+						currentLevel[iOfPlayer][jOfPlayer - 1] = 3;
+						world.repaint();
+
+					}
+
+				}
+
+			}
+
+		}
+
+		/**
+		 * 
+		 * @author goebelag
+		 * 
+		 *         moves the player to the right if the right button is pressed
+		 *
+		 */
+		class RightPressAction extends AbstractAction {
+
+			/**
+			 * if canMove = true and there is an empty space to the right of the
+			 * player then the player will move one space riht right and update
+			 * the current state of the game
+			 */
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// move hero right
+				if (canMove) {
+					canMove = false;
+					Main.startTime = System.currentTimeMillis();
+					System.out.println("you pressed right");
+					int iOfPlayer = world.player.getYLoc();
+					int jOfPlayer = world.player.getXLoc();
+					if (jOfPlayer < currentLevel[iOfPlayer].length - 1) {
+						// Checks the next cell for a emerald and eats it if so.
+						if (currentLevel[iOfPlayer][jOfPlayer + 1] == 2)
+							scoreBoard.collectEmerald();
+						// Moves the player and removes dirt
+						currentLevel[iOfPlayer][jOfPlayer] = 0;
+						currentLevel[iOfPlayer][jOfPlayer + 1] = 3;
+						world.repaint();
+
+					}
+
+				}
+
+			}
+
+		}
+
+		// the following implement the changing of levels
+		world.setPreferredSize(new Dimension(FRAME_WIDTH, FRAME_HEIGTH));
+		world.getInputMap().put(KeyStroke.getKeyStroke('u'), "DoU");
+		world.getActionMap().put("DoU", new UPressAction(frame, world));
+		world.getInputMap().put(KeyStroke.getKeyStroke('d'), "DoD");
+		world.getActionMap().put("DoD", new DPressAction(frame, world));
+		world.getInputMap().put(KeyStroke.getKeyStroke(KeyEvent.VK_UP, 0),
+				"DoUp");
+		world.getActionMap().put("DoUp", new UpPressAction());
+		world.getInputMap().put(KeyStroke.getKeyStroke(KeyEvent.VK_DOWN, 0),
+				"DoDown");
+		world.getActionMap().put("DoDown", new DownPressAction());
+		world.getInputMap().put(KeyStroke.getKeyStroke(KeyEvent.VK_LEFT, 0),
+				"DoLeft");
+		world.getActionMap().put("DoLeft", new LeftPressAction());
+		world.getInputMap().put(KeyStroke.getKeyStroke(KeyEvent.VK_RIGHT, 0),
+				"DoRight");
+		world.getActionMap().put("DoRight", new RightPressAction());
+
+		// frame.setMaximumSize(new Dimension(600,600));
+		frame.setResizable(true);
+		panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
+		// panel.setSize(600,500);
+		// world.setSize(600, 400);
+		scoreBoard.setSize(600, 100);
+		scoreBoard.setBackground(Color.RED);
+		panel.add(Box.createVerticalStrut(GAP));
+		panel.add(world);
+		panel.add(Box.createVerticalStrut(GAP));
+		panel.add(scoreBoard);
+		frame.add(panel);
+
+		// frame.add(world);
+		// frame.add(scoreBoard);
+
+		frame.pack();
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setVisible(true);
+		// keeps track of time to limit how often the player ccan move
+		startTime = System.currentTimeMillis();
+		while (true) {
+			if (System.currentTimeMillis() - startTime > 200) {
+				startTime = System.currentTimeMillis();
+				canMove = true;
+			}
+		}
+
+	}
+
+	/**
+	 * 
+	 * @param levelNumber
+	 *            - level to load
+	 * @return
+	 * @throws IOException
+	 * 
+	 *             loads the level
+	 */
+	public static int[][] loadLevel(String levelNumber) throws IOException {
+		String fileName = "C:/EclipseWorkspaces/csse220/ArcadeGameProject/src/";
+		fileName = fileName + levelNumber;
+		File file = new File(fileName);
+
+		Scanner inScanner = null;
+		try {
+			inScanner = new Scanner(file);
+			String stringer = "";
+			for (int i = 0; i < currentLevel.length; i++) {
+
+				for (int j = 0; j < currentLevel[i].length; j++) {
+
+					currentLevel[i][j] = inScanner.nextInt();
+				}
+			}
+
+		} finally {
+			inScanner.close();
+		}
+		return currentLevel;
+	}
+
+	/**
+	 * 
+	 * @return - returns canMove
+	 */
+	public boolean getCanMove() {
+		return canMove;
+	}
+
+}

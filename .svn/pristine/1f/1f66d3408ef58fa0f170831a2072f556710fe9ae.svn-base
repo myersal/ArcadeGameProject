@@ -1,0 +1,178 @@
+
+import java.awt.event.ActionEvent;
+import java.awt.event.KeyEvent;
+import java.io.File;
+import java.io.IOException;
+import java.util.Scanner;
+
+import javax.swing.AbstractAction;
+import javax.swing.JFrame;
+import javax.swing.KeyStroke;
+/**
+ * The main class for your arcade game.
+ * 
+ * You can design your game any way you like, but make the game start
+ * by running main here.
+ * 
+ * Also don't forget to write javadocs for your classes and functions!
+ * 
+ * @author Buffalo
+ *
+ */
+public class Main {
+	private static final int FRAME_WIDTH = 600;
+	private static final int FRAME_HEIGTH = 400;
+	private static final int BLOCK_WIDTH = FRAME_WIDTH / 15;
+	private static final int BLOCK_HEIGHT = FRAME_HEIGTH / 10;
+	private static int[][] currentLevel;
+
+	/**
+	 * @param args
+	 */
+	public static void main(String[] args) 
+	{
+		currentLevel = new int[10][15];
+		try {
+			loadLevel("level1");
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		for (int i = 0; i < currentLevel.length; i++)
+		{
+			for (int j = 0; j < currentLevel[i].length; j++)
+			{
+				System.out.println(currentLevel[i][j]);
+			}
+		}
+		
+		JFrame frame = new JFrame();
+				
+		frame.setSize(FRAME_WIDTH, FRAME_HEIGTH + 40);
+		frame.setTitle("DIGGER");
+		
+		class UPressAction extends AbstractAction{
+			private JFrame frame;
+			private LocalEnvironment world;
+			
+			public UPressAction(JFrame frame, LocalEnvironment world){
+				this.frame = frame;
+				this.world = world;
+				
+			}
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				//loadnext level
+				System.out.println("you pressed U");
+				try {
+					this.world.changeLevelTo(loadLevel("level2"));
+					
+					this.frame.repaint();
+				} catch (IOException exception) {
+					// TODO Auto-generated catch-block stub.
+					exception.printStackTrace();
+				}
+				
+			}
+			
+		}
+		class DPressAction extends AbstractAction{
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				//load previous level
+				System.out.println("you pressed D");
+			}
+			
+		}
+		class UpPressAction extends AbstractAction{
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				//move hero up
+				System.out.println("you pressed Up");
+			}
+			
+		}
+		class DownPressAction extends AbstractAction{
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				//move hero down
+				System.out.println("you pressed Down");
+			}
+			
+		}
+		class LeftPressAction extends AbstractAction{
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				//move hero left
+				System.out.println("you pressed left");
+			}
+			
+		}
+		
+		class RightPressAction extends AbstractAction{
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				//load previous level
+				System.out.println("you pressed right");
+			}
+			
+		}
+		
+		
+		
+		LocalEnvironment world = new LocalEnvironment(frame, currentLevel);
+		world.getInputMap().put(KeyStroke.getKeyStroke('u'), "DoU");
+		world.getActionMap().put("DoU", new UPressAction(frame, world));
+		world.getInputMap().put(KeyStroke.getKeyStroke('d'), "DoD");
+		world.getActionMap().put("DoD", new DPressAction());
+		world.getInputMap().put(KeyStroke.getKeyStroke(KeyEvent.VK_UP,0), "DoUp");
+		world.getActionMap().put("DoUp", new UpPressAction());
+		world.getInputMap().put(KeyStroke.getKeyStroke(KeyEvent.VK_DOWN,0), "DoDown");
+		world.getActionMap().put("DoDown", new DownPressAction());
+		world.getInputMap().put(KeyStroke.getKeyStroke(KeyEvent.VK_LEFT,0), "DoLeft");
+		world.getActionMap().put("DoLeft", new LeftPressAction());
+		world.getInputMap().put(KeyStroke.getKeyStroke(KeyEvent.VK_RIGHT,0), "DoRight");
+		world.getActionMap().put("DoRight", new RightPressAction());
+		frame.add(world);
+				
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setVisible(true);
+		
+		
+		
+	
+	}
+	public static int[][] loadLevel(String levelNumber) throws IOException {
+		String fileName = "C:/EclipseWorkspaces/csse220/ArcadeGameProject/src/";
+		fileName = fileName + levelNumber;
+		File file = new File(fileName);
+		
+		Scanner inScanner = null;
+		try {
+			inScanner = new Scanner(file);
+			String stringer = "";
+			for (int i = 0; i < currentLevel.length; i++)
+			{
+				
+				for (int j = 0; j < currentLevel[i].length; j++)
+				{
+					
+					currentLevel[i][j] = inScanner.nextInt();
+				}
+			}
+
+				
+
+			
+		} finally {
+			inScanner.close();
+				  }
+		return currentLevel;
+	}
+	
+}

@@ -1,0 +1,7 @@
+We estimated that it would take only 10 hours for each person to finish cycle 4.
+
+It is actually taking us about 15 hours to complete cycle 4.
+
+We ran into complications trying to debug and enhance most of the code so that it
+ran smoother with less lag. The dynamite was also complicated due to the outofbounds
+errors that we continually got.

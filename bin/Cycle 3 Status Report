@@ -1,0 +1,8 @@
+We estimated that it would take only 5 hours for each person to finish cycle 3.
+
+It is actually taking us about 9 hours to complete cycle 3.
+
+Some complications that we found are we underestimated the complexity of making the gold bag
+move the way we wanted it to move and we underestimated how to kill the enemies and then make gold
+coins appear after the gold bag has fallen more than 1 space. We specifically underestimated the
+complexity of moving the gold from the side when the character pushed it.

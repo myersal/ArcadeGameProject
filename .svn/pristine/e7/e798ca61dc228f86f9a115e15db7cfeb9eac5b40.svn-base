@@ -1,0 +1,59 @@
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+
+import javax.imageio.ImageIO;
+import javax.swing.JComponent;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+
+@SuppressWarnings("serial")
+public class EndGameScreen extends JComponent {
+
+	private JFrame frame;
+	/**
+	 * 
+	 * Creates the infoComponent to draw the lives counter and various other
+	 * graphics
+	 *
+	 * @param frame
+	 *            the frame for the component to paint on
+	 * @param lives
+	 *            inputs the number of lives the player gets
+	 */
+
+	public EndGameScreen(JFrame frame) {
+		this.frame = frame;
+		Scoreboard.getScore();
+
+	}
+
+	/**
+	 * draws the infoComponent
+	 */
+
+	protected void paintComponent(Graphics g) {
+		super.paintComponent(g);
+
+		Graphics2D g2 = (Graphics2D) g;
+
+		BufferedImage img = null;
+		try {
+			img = ImageIO
+					.read(new File(
+							"C:/EclipseWorkspaces/csse220/ArcadeGameProject/src/GameOver.jpg"));
+		} catch (IOException exception) {
+
+			exception.printStackTrace();
+		}
+
+		g2.drawImage(img, 0, 0, 600, 600, 0, 0, img.getWidth(),
+				img.getHeight(), null);
+		JLabel scoreLabel = new JLabel("Your Final Score is "
+				+ Scoreboard.getScore() + "!");
+		this.frame.add(scoreLabel);
+	}
+
+}

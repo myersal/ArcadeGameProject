@@ -1,0 +1,32 @@
+import javax.swing.JComponent;
+
+/**
+ * 
+ * An abstract space that has a set width and height.
+ *
+ * @author myersal.
+ *         Created Feb 6, 2015.
+ */
+@SuppressWarnings("serial")
+public class AbstractSpace extends JComponent 
+{
+	protected int xLoc;
+	protected int yLoc;
+	private static final int BLOCK_WIDTH = 600 / 15;
+	private static final int BLOCK_HEIGHT = 400 / 10;
+	
+	/**
+	 * 
+	 * Creates an Abstract Space.
+	 *
+	 * @param x
+	 * @param y
+	 */
+	public AbstractSpace(int x, int y)
+	{
+		xLoc = x * BLOCK_WIDTH;
+		yLoc = y * BLOCK_HEIGHT;
+	}
+	
+
+}

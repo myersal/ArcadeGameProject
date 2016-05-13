@@ -1,0 +1,5 @@
+1.  Gold appears along with emerald, dirt, and blank spaces
+
+2.  Gold will fall after a few seconds of digging under it, and will kill
+     enemies and the hero as it falls
+3.  After the gold falls more than one space, it can be picked up for points.

@@ -1,0 +1,25 @@
+
+/**
+ * 
+ * Creates the abstract item that will have methods later in the project.
+ *
+ * @author myersal.
+ *         Created Feb 6, 2015.
+ */
+
+@SuppressWarnings("serial")
+public class AbstractItem extends AbstractOccupiedSpace {
+	
+	/**
+	 * 
+	 * Creates the abstract item and sends the x and y coordinate to the super class.
+	 *
+	 * @param x
+	 * @param y
+	 */
+
+	public AbstractItem(int x, int y) {
+		super(x, y);
+	}
+
+}

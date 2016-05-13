@@ -1,0 +1,13 @@
+
+public abstract class AbstractEnemy extends AbstractCharacter {
+
+	protected LocalEnvironment world;
+	public AbstractEnemy(LocalEnvironment w) {
+		super(12,0);
+		this.world = w;
+	}
+	public abstract void move();
+
+
+
+}

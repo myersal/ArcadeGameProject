@@ -1,0 +1,7 @@
+We estimated that it would take about 5 hours for each individual on cycle 1.
+
+Each individual put in about 8 hours of work for cycle 1.
+
+Some complications we had that took us longer than required were we underestimated
+ the complexity of reading text files in java. We also underestimated the complexity 
+ of making our hero move around the map.

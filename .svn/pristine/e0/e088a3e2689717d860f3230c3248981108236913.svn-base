@@ -1,0 +1,138 @@
+import java.awt.Color;
+import java.awt.Graphics2D;
+import java.awt.geom.Rectangle2D;
+
+
+public class Bullet extends AbstractMover {
+	protected static String direction = "right";
+	private static final int BLOCK_WIDTH = 600 / 15;
+	private static final int BLOCK_HEIGHT = 400 / 10;
+	LocalEnvironment world;
+
+	/**
+	 * 
+	 * Constructs the bullet and sends it to the super class.
+	 *
+	 * @param x
+	 * 		x coordinate of the bullet
+	 * @param y
+	 * 		y coordinate of the bullet
+	 * @param world
+	 * 		world that the bullet resides in
+	 */
+	
+	public Bullet(int x, int y, LocalEnvironment world) {
+		super(x, y);
+		this.world = world;
+	}
+	
+	/**
+	 * 
+	 * Draws the bullet on the graphics object.
+	 *
+	 * @param g
+	 * 		canvas that the bullet is to be drawon on.
+	 */
+	
+	protected void drawOn(Graphics2D g){
+		
+		//draws a small rectangle with a big white rectangle around it
+		Rectangle2D.Double space = new Rectangle2D.Double(super.xLoc
+				* BLOCK_WIDTH, super.yLoc * BLOCK_HEIGHT, BLOCK_WIDTH, BLOCK_HEIGHT);
+		g.setColor(Color.white);
+		g.fill(space);
+		
+		Rectangle2D.Double projectile = new Rectangle2D.Double(super.xLoc*BLOCK_WIDTH+BLOCK_WIDTH/4,super.yLoc*BLOCK_HEIGHT+BLOCK_HEIGHT/4,BLOCK_WIDTH/4,BLOCK_HEIGHT/4);
+		g.setColor(Color.RED);
+		g.fill(projectile);
+	}
+	
+	/**
+	 * 
+	 * Moves the bullet along the graphics object in the given direction.
+	 *
+	 */
+	
+	public void move(){
+		
+		int[][] level = this.world.getLevel();
+		try{
+			level[super.yLoc][super.xLoc] = 0;
+		
+			if(this.direction.equals("up")){
+				super.yLoc--;
+				if(level[super.yLoc][super.xLoc]==4||level[super.yLoc][super.xLoc]==5){
+					level[super.yLoc][super.xLoc]=0;
+//					level[super.yLoc+1][super.xLoc]=0;
+					this.world.clearBullet();
+				}else if(level[super.yLoc][super.xLoc]==1||level[super.yLoc][super.xLoc]==2||level[super.yLoc][super.xLoc]==7) {
+					this.world.clearBullet();
+				} else {
+					level[super.yLoc][super.xLoc]=6;
+				}
+			} else if (this.direction.equals("down")){
+				super.yLoc++;
+				if(level[super.yLoc][super.xLoc]==4||level[super.yLoc][super.xLoc]==5){
+					level[super.yLoc][super.xLoc]=0;
+//					level[super.yLoc-1][super.xLoc]=0;
+					this.world.clearBullet();
+				}else if(level[super.yLoc][super.xLoc]==1||level[super.yLoc][super.xLoc]==2||level[super.yLoc][super.xLoc]==7) {
+					this.world.clearBullet();
+				} else {
+					level[super.yLoc][super.xLoc]=6;
+				}
+			} else if (this.direction.equals("left")){
+				super.xLoc--;
+				if(level[super.yLoc][super.xLoc]==4||level[super.yLoc][super.xLoc]==5){
+					level[super.yLoc][super.xLoc]=0;
+//					level[super.yLoc+1][super.xLoc+1]=0;
+					this.world.clearBullet();
+				}else if(level[super.yLoc][super.xLoc]==1||level[super.yLoc][super.xLoc]==2||level[super.yLoc][super.xLoc]==7) {
+					this.world.clearBullet();
+				} else {
+					level[super.yLoc][super.xLoc]=6;
+				}
+			} else if (this.direction.equals("right")){
+				super.xLoc++;
+				if(level[super.yLoc][super.xLoc]==4||level[super.yLoc][super.xLoc]==5){
+					level[super.yLoc][super.xLoc]=0;
+//					level[super.yLoc][super.xLoc-1]=0;
+					this.world.clearBullet();
+				} else if(level[super.yLoc][super.xLoc]==1||level[super.yLoc][super.xLoc]==2||level[super.yLoc][super.xLoc]==7) {
+					this.world.clearBullet();
+				} else {
+					level[super.yLoc][super.xLoc]=6;
+				}
+			}
+			this.world.repaint();
+		
+		} catch (IndexOutOfBoundsException e){
+			// Do nothing
+		}
+	}
+	
+	/**
+	 * 
+	 * Sets the direction of the bullet to be fired.
+	 *
+	 * @param direction
+	 * 		specified direction of the bullet.
+	 */
+	
+	public void setDirection(String direction){
+		Bullet.direction=direction;
+	}
+	
+	/**
+	 * 
+	 * returns thd direction that bullet bullet moves.
+	 *
+	 * @return
+	 * 		returns bullet's direction.
+	 */
+	
+	public String getDirection(){
+		return Bullet.direction;
+	}
+	
+}

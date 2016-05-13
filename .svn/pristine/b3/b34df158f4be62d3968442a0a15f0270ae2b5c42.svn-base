@@ -1,0 +1,66 @@
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+
+/**
+ * 
+ * Creates the score counter as the player grabs items and kills enemies.
+ *
+ * @author myersal.
+ *         Created Feb 6, 2015.
+ */
+
+public class Scoreboard extends JLabel {
+
+	private Color backgroundColor = new Color(70, 70, 255);
+	private JFrame frame;
+	private int score = 0;
+	
+	/**
+	 * 
+	 * Creates the scoreboard.
+	 *
+	 * @param frame
+	 * 		frame for the scoreboard to be drawn on.
+	 */
+	
+	public Scoreboard(JFrame frame){
+		super("0");
+		this.frame = frame;
+		Font font = new Font("myFont",0,100);
+		super.setFont(font);
+	}
+	
+	/**
+	 * Draws the scoreboard
+	 */
+	
+	@Override
+	protected void paintComponent(Graphics g){
+		super.paintComponent(g);
+		Graphics2D g2 = (Graphics2D) g;
+		
+		
+		
+//		Rectangle2D background = new Rectangle2D.Double(0,0,600,100);
+//		g2.setColor(this.backgroundColor);
+//		g2.fill(background);
+	}
+	
+	/**
+	 * Updates the score when an emerald is collected.
+	 *
+	 */
+	
+	public void collectEmerald(){
+		this.score += 25;
+		super.setText(new Integer(this.score).toString());
+		this.repaint();
+	}
+	
+	
+}

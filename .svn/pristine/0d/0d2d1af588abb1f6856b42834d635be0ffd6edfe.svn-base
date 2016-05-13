@@ -1,0 +1,51 @@
+import java.awt.Font;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+
+/**
+ * 
+ * Creates the score counter as the player grabs items and kills enemies.
+ *
+ * @author myersal.
+ *         Created Feb 6, 2015.
+ */
+
+@SuppressWarnings("serial")
+public class Scoreboard extends JLabel {
+
+	private int score = 0;
+	
+	/**
+	 * 
+	 * Creates the scoreboard.
+	 *
+	 * @param frame
+	 * 		frame for the scoreboard to be drawn on.
+	 */
+	
+	public Scoreboard(JFrame frame){
+		super("0");
+		Font font = new Font("myFont",0,100);
+		super.setFont(font);
+	}
+	
+	
+	/**
+	 * Updates the score when an emerald is collected.
+	 *
+	 */
+	
+	public void collectEmerald(){
+		this.score += 25;
+		super.setText(new Integer(this.score).toString());
+		this.repaint();
+	}
+	
+	public void collectGold() {
+		this.score += 100;
+		super.setText(new Integer(this.score).toString());
+		this.repaint();
+	}
+	
+	
+}

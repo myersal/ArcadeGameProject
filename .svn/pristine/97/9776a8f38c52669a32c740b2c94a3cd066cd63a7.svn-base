@@ -1,0 +1,23 @@
+/**
+ * 
+ * Abstract class that creates the character. It will have more implementation
+ * later
+ *
+ * @author myersal. Created Feb 6, 2015.
+ */
+
+public abstract class AbstractCharacter extends AbstractMover {
+
+	/**
+	 * 
+	 * creates the abstract character and gives the x and y to the super.
+	 *
+	 * @param x
+	 * @param y
+	 */
+
+	public AbstractCharacter(int x, int y) {
+		super(x, y);
+	}
+
+}

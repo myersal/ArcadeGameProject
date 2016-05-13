@@ -1,0 +1,6 @@
+User launches program and starts with his man at a predetermined location in a grid of dirt, empty pathways, and emarald/dirt blocks.
+After two seconds, an enemy will appear in the upper right hand corner and move towards the player throught the pathways.
+Every five seconds after that another enemy appears.
+Enemies are slightly faster than the player.
+Enemies can randomly turn into a nobbin which will attack the player in sytraight line and dig dirt and collect emeralds.  He is slower.
+The player can shoot a bullet that kills enemies.

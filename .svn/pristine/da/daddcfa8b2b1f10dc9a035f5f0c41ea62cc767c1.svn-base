@@ -1,0 +1,63 @@
+
+import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.geom.Rectangle2D;
+
+import javax.swing.JComponent;
+import javax.swing.JFrame;
+
+
+public class LocalEnvironment extends JComponent {
+	public static final Color backgroundColor = new Color(155, 100,75);
+	private int[][] startLevel;
+	
+	public LocalEnvironment(JFrame frame, int[][] level){
+		this.startLevel = level;
+		
+		
+	}
+	
+	
+	@Override
+	protected void paintComponent(Graphics g){
+		super.paintComponent(g);
+		Graphics2D g2 = (Graphics2D) g;
+		
+		Rectangle2D background = new Rectangle2D.Double(0,0,this.getWidth(),this.getHeight());
+		g2.setColor(backgroundColor);
+		g2.fill(background);
+		
+		for (int i = 0; i < startLevel.length; i++)
+		{
+			for (int j = 0; j < startLevel[i].length; j++)
+			{
+				if (startLevel[i][j] == 0)
+				{
+					EmptySpace space = new EmptySpace(j, i);
+					space.drawOn(g2);
+				}
+				if (startLevel[i][j] == 1)
+				{
+					Dirt dirt = new Dirt(j,i);
+					dirt.drawOn(g2);
+					
+				}
+				if (startLevel[i][j] == 2)
+				{
+					Emerald emerald = new Emerald(j,i);
+					emerald.drawOn(g2);
+					
+				}
+				if (startLevel[i][j] == 0)
+				{
+					
+				}
+					
+				
+			}
+		}
+	}
+	
+}
+

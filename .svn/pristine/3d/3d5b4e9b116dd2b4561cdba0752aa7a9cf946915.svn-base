@@ -1,0 +1,218 @@
+import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+
+import javax.swing.JComponent;
+import javax.swing.JFrame;
+
+/**
+ * 
+ * @author goebelag
+ * 
+ *         creates the game board
+ *
+ */
+@SuppressWarnings("serial")
+public class LocalEnvironment extends JComponent {
+	// background color of local enviroment
+	public static final Color backgroundColor = new Color(155, 100, 75);
+	// the player
+	public Player player;
+	// the starting level
+	private int[][] startLevel;
+	private int emeraldCount;
+	private Graphics2D g3;
+	protected Bullet bullet;
+
+	/**
+	 * 
+	 * @param frame
+	 *            - the frame
+	 * @param level
+	 *            - level to set to startLevel
+	 */
+	public LocalEnvironment(JFrame frame, int[][] level) {
+		this.startLevel = level;
+		this.emeraldCount = 0;
+		for (int i = 0; i < 10; i++) {
+			for (int j = 0; j < 15; j++) {
+				if (level[i][j] == 2) {
+					this.emeraldCount++;
+				}
+			}
+		}
+
+	}
+
+	public Graphics2D getGraphics() {
+		return g3;
+	}
+
+	/**
+	 * 
+	 * @param newLevel
+	 *            - newLevel to put to startLevel
+	 */
+	public void changeLevelTo(int[][] newLevel) {
+		this.startLevel = newLevel;
+		this.emeraldCount = 0;
+		for (int i = 0; i < 10; i++) {
+			for (int j = 0; j < 15; j++) {
+				if (newLevel[i][j] == 2) {
+					this.emeraldCount++;
+				}
+			}
+		}
+	}
+
+	/**
+	 * 
+	 * Returns the number of emeralds left in the level.
+	 *
+	 * @return returns the number of emeralds left.
+	 */
+
+	public int getEmeralds() {
+		return this.emeraldCount;
+	}
+
+	/**
+	 * 
+	 * subtracts an emerald from the emerald count.
+	 *
+	 */
+
+	public void subtractEmerald() {
+		this.emeraldCount--;
+	}
+
+	/**
+	 * 
+	 * Returns the level that it currently is on.
+	 *
+	 * @return current level.
+	 */
+
+	public int[][] getLevel() {
+		return startLevel;
+	}
+
+	/**
+	 * 
+	 * Ends the game.
+	 *
+	 */
+	public static void endGame() {
+		// add
+	}
+
+	/**
+	 * draws the game board
+	 * 
+	 */
+	@Override
+	protected void paintComponent(Graphics g) {
+		super.paintComponent(g);
+		Graphics2D g2 = (Graphics2D) g;
+		g3 = (Graphics2D) g;
+
+		// Rectangle2D background = new Rectangle2D.Double(0,0,600,400);
+		// g2.setColor(backgroundColor);
+		// g2.fill(background);
+		//
+		for (int i = 0; i < this.startLevel.length; i++) {
+			for (int j = 0; j < this.startLevel[i].length; j++) {
+				// 0 stands for empty space
+				if (this.startLevel[i][j] == 0) {
+					EmptySpace space = new EmptySpace(j, i);
+					space.drawOn(g2);
+				}
+				// 1 stands for dirt space
+				if (this.startLevel[i][j] == 1) {
+					Dirt dirt = new Dirt(j, i);
+					dirt.drawOn(g2);
+
+				}
+				// 2 stands for emerald space
+				if (this.startLevel[i][j] == 2) {
+					Emerald emerald = new Emerald(j, i);
+					emerald.drawOn(g2);
+
+				}
+				// 3 stands for the player start
+				if (this.startLevel[i][j] == 3) {
+					Player playerTo = new Player(j, i);
+					this.player = playerTo;
+					playerTo.drawOn(g2);
+				}
+				// 4 stands for a hobbin location
+				if (this.startLevel[i][j] == 4) {
+					Hobbin hobbin = new Hobbin(this, j, i);
+					hobbin.drawOn(g2);
+
+				}
+				// 5 stands for a nobbin location
+				if (this.startLevel[i][j] == 5) {
+					Nobbin nobbin = new Nobbin(this, j, i);
+					nobbin.drawOn(g2);
+				}
+				// 6 stands for a bullet up.
+				if (this.startLevel[i][j] == 6) {
+					Bullet drawnbullet = new Bullet(j, i, this);
+					drawnbullet.drawOn(g2);
+					drawnbullet.setDirection("up");
+					this.bullet = drawnbullet;
+				}
+				// 7 stands for a bullet down.
+				if (this.startLevel[i][j] == 7) {
+					Bullet drawnbullet = new Bullet(j, i, this);
+					drawnbullet.drawOn(g2);
+					drawnbullet.setDirection("down");
+					this.bullet = drawnbullet;
+				}
+				// 6 stands for a bullet left.
+				if (this.startLevel[i][j] == 8) {
+					Bullet drawnbullet = new Bullet(j, i, this);
+					drawnbullet.drawOn(g2);
+					drawnbullet.setDirection("left");
+					this.bullet = drawnbullet;
+				}
+				// 6 stands for a bullet right.
+				if (this.startLevel[i][j] == 9) {
+					Bullet drawnbullet = new Bullet(j, i, this);
+					drawnbullet.drawOn(g2);
+					drawnbullet.setDirection("right");
+					this.bullet = drawnbullet;
+				}
+
+				// [choose me] stands for a gold space
+				if (this.startLevel[i][j] == 10) {
+					GoldBag goldBag = new GoldBag(j, i);
+					goldBag.drawOn(g2);
+				}
+
+			}
+		}
+	}
+
+	/**
+	 * 
+	 * Returns the bullet.
+	 *
+	 * @return returns the bullet.
+	 */
+
+	public Bullet getBullet() {
+		return this.bullet;
+	}
+
+	/**
+	 * 
+	 * clears the bullet from the map.
+	 *
+	 */
+	public void clearBullet() {
+		this.bullet = null;
+	}
+
+}

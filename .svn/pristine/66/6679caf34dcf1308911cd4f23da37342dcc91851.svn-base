@@ -1,0 +1,161 @@
+import java.awt.Color;
+import java.awt.Graphics2D;
+import java.awt.geom.Rectangle2D;
+
+
+public class Nobbin extends AbstractEnemy {
+	private static final int BLOCK_WIDTH = 600 / 15;
+	private static final int BLOCK_HEIGHT = 400 / 10;
+
+	/**
+	 * 
+	 * Creates a Nobbin
+	 *
+	 * @param x
+	 * @param y
+	 */
+	
+	public Nobbin(LocalEnvironment w, int x, int y) {
+		super(w,x,y);
+
+	}
+
+	/**
+	 * 
+	 * Draws the playable character on the environment.
+	 *
+	 * @param g
+	 */
+	
+	protected void drawOn(Graphics2D g) {
+		Rectangle2D.Double space = new Rectangle2D.Double(super.xLoc
+				* BLOCK_WIDTH, super.yLoc * BLOCK_HEIGHT, BLOCK_WIDTH, BLOCK_HEIGHT);
+		g.setColor(Color.white);
+		g.fill(space);
+		Rectangle2D.Double man = new Rectangle2D.Double(super.xLoc
+				* BLOCK_WIDTH + 10, super.yLoc * BLOCK_HEIGHT + 10, BLOCK_WIDTH - 20, BLOCK_HEIGHT - 20);
+		g.setColor(Color.blue);
+		g.fill(man);
+	}
+
+	@Override
+	public void move() {
+		if (world.getLevel()[this.yLoc][this.xLoc] == 5)
+		{
+			
+			int xDistance = world.player.xLoc - this.xLoc;
+			int yDistance = world.player.yLoc - this.yLoc;
+			if (Math.abs(xDistance) > Math.abs(yDistance))
+			{
+				if (xDistance > 0 && this.xLoc + 1 < world.getLevel()[this.yLoc].length && world.getLevel()[this.yLoc][this.xLoc + 1] == 0)
+				{
+					world.getLevel()[this.yLoc][this.xLoc] = 0;
+					this.xLoc++;
+					world.getLevel()[this.yLoc][this.xLoc] = 5;
+					if (world.player.xLoc == this.xLoc && world.player.yLoc == this.yLoc)
+					{
+						world.player.die();
+					}
+					//world.repaint();
+					return;
+					
+				}
+				if (xDistance < 0 && this.xLoc - 1 >= 0 && world.getLevel()[this.yLoc][this.xLoc - 1] == 0)
+				{
+					world.getLevel()[this.yLoc][this.xLoc] = 0;
+					this.xLoc--;
+					world.getLevel()[this.yLoc][this.xLoc] = 5;
+					if (world.player.xLoc == this.xLoc && world.player.yLoc == this.yLoc)
+					{
+						world.player.die();
+					}
+					//world.repaint();
+					return;
+				}
+			}
+			else if (Math.abs(xDistance) < Math.abs(yDistance))
+			{
+				if (yDistance > 0 && this.yLoc + 1 < world.getLevel().length && world.getLevel()[this.yLoc + 1][this.xLoc] == 0)
+				{
+					world.getLevel()[this.yLoc][this.xLoc] = 0;
+					this.yLoc++;
+					world.getLevel()[this.yLoc][this.xLoc] = 5;
+					if (world.player.xLoc == this.xLoc && world.player.yLoc == this.yLoc)
+					{
+						world.player.die();
+					}
+					//world.repaint();
+					return;
+					
+				}
+				if (yDistance < 0 && this.yLoc - 1 >= 0 && world.getLevel()[this.yLoc - 1][this.xLoc] == 0)
+				{
+					world.getLevel()[this.yLoc][this.xLoc] = 0;
+					this.yLoc--;
+					world.getLevel()[this.yLoc][this.xLoc] = 5;
+					if (world.player.xLoc == this.xLoc && world.player.yLoc == this.yLoc)
+					{
+						world.player.die();
+					}
+					//world.repaint();
+					return;
+				}
+			}
+			else if (world.player.xLoc == this.xLoc && world.player.yLoc == this.yLoc)
+			{
+				world.player.die();
+				return;
+			}
+			else if (this.yLoc + 1 < world.getLevel().length && world.getLevel()[this.yLoc + 1][this.xLoc] == 0)
+			{
+				world.getLevel()[this.yLoc][this.xLoc] = 0;
+				this.yLoc++;
+				world.getLevel()[this.yLoc][this.xLoc] = 5;
+				if (world.player.xLoc == this.xLoc && world.player.yLoc == this.yLoc)
+				{
+					world.player.die();
+				}
+				//world.repaint();
+				return;
+			}
+			else if (this.yLoc - 1 >= 0 && world.getLevel()[this.yLoc - 1][this.xLoc] == 0)
+			{
+				world.getLevel()[this.yLoc][this.xLoc] = 0;
+				this.yLoc--;
+				world.getLevel()[this.yLoc][this.xLoc] = 5;
+				if (world.player.xLoc == this.xLoc && world.player.yLoc == this.yLoc)
+				{
+					world.player.die();
+				}
+				//world.repaint();
+				return;
+			}
+			else if (this.xLoc + 1 < world.getLevel()[this.yLoc].length && world.getLevel()[this.yLoc][this.xLoc + 1] == 0)
+			{
+				world.getLevel()[this.yLoc][this.xLoc] = 0;
+				this.xLoc++;
+				world.getLevel()[this.yLoc][this.xLoc] = 5;
+				if (world.player.xLoc == this.xLoc && world.player.yLoc == this.yLoc)
+				{
+					world.player.die();
+				}
+				//world.repaint();
+				return;
+			}
+			else if (this.xLoc - 1 >= 0 && world.getLevel()[this.yLoc][this.xLoc - 1] == 0)
+			{
+				world.getLevel()[this.yLoc][this.xLoc] = 0;
+				this.xLoc--;
+				world.getLevel()[this.yLoc][this.xLoc] = 5;
+				if (world.player.xLoc == this.xLoc && world.player.yLoc == this.yLoc)
+				{
+					world.player.die();
+				}
+				//world.repaint();
+				return;
+			}
+		}
+		
+	}
+
+}

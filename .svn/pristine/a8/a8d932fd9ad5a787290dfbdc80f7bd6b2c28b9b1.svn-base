@@ -1,0 +1,15 @@
+//import java.awt.geom.Point2D;
+//
+//
+//public class AbstractCharacter extends AbstractMover {
+//	
+//	protected LevelEnvironment world;
+//	protected Point2D startPoint;
+//	
+//	public AbstractCharacter (LevelEnvironment world, Point2D startPoint) {
+//		super(world, startPoint);
+//		this.world = world;
+//		this.startPoint = startPoint;
+//	}
+//
+//}

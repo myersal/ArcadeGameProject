@@ -1,0 +1,375 @@
+import java.awt.Graphics2D;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+
+import javax.imageio.ImageIO;
+
+public class Hobbin extends AbstractEnemy {
+
+	private static final int BLOCK_WIDTH = 600 / 15;
+	private static final int BLOCK_HEIGHT = 400 / 10;
+
+	/**
+	 * 
+	 * Creates a Hobbin.
+	 *
+	 * @param x
+	 * @param y
+	 */
+
+	public Hobbin(LocalEnvironment w, int x, int y) {
+		super(w, x, y);
+	}
+
+	/**
+	 * 
+	 * Draws the Hobbin on the environment.
+	 *
+	 * @param g
+	 */
+
+	protected void drawOn(Graphics2D g) {
+		BufferedImage img = null;
+		try {
+			img = ImageIO
+					.read(new File(
+							"C:/EclipseWorkspaces/csse220/ArcadeGameProject/src/mole1.png"));
+		} catch (IOException exception) {
+
+			exception.printStackTrace();
+		}
+
+		g.translate(super.xLoc * BLOCK_WIDTH, super.yLoc * BLOCK_HEIGHT);
+
+		g.drawImage(img, 0, 0, BLOCK_WIDTH, BLOCK_HEIGHT, 0, 0, img.getWidth(),
+				img.getHeight(), null);
+
+		g.translate(-super.xLoc * BLOCK_WIDTH, -super.yLoc * BLOCK_HEIGHT);
+
+	}
+	
+	/**
+	 * The move method for the hobbin
+	 */
+
+	@Override
+	public void move() {
+		int xDistance = world.player.xLoc - this.xLoc;
+		int yDistance = world.player.yLoc - this.yLoc;
+		if (Math.abs(xDistance) > Math.abs(yDistance)) {
+			if (xDistance > 0) {
+				world.getLevel()[this.yLoc][this.xLoc] = 0;
+				this.xLoc++;
+				if (world.getLevel()[this.yLoc][this.xLoc] == 2) {
+					world.subtractEmerald();
+					if (this.world.getEmeralds() == 0) {
+						try {
+							Main.levelNumber++;
+							if (Main.levelNumber > 3) {
+								Main.levelNumber = 1;
+							}
+							this.world.changeLevelTo(Main.loadLevel("level"
+									+ (Main.levelNumber)));
+						} catch (IOException exception) {
+
+							exception.printStackTrace();
+						}
+						this.world.repaint();
+						return;
+					}
+				}
+				world.getLevel()[this.yLoc][this.xLoc] = 4;
+				if (world.player.xLoc == this.xLoc
+						&& world.player.yLoc == this.yLoc) {
+					world.player.die();
+					world.getLevel()[8][5] = 3;
+				}
+
+				world.repaint();
+				return;
+
+			}
+			if (xDistance < 0) {
+				world.getLevel()[this.yLoc][this.xLoc] = 0;
+				this.xLoc--;
+				if (world.getLevel()[this.yLoc][this.xLoc] == 2) {
+					world.subtractEmerald();
+					if (this.world.getEmeralds() == 0) {
+						try {
+							Main.levelNumber++;
+							if (Main.levelNumber > 3) {
+								Main.levelNumber = 1;
+							}
+							this.world.changeLevelTo(Main.loadLevel("level"
+									+ (Main.levelNumber)));
+						} catch (IOException exception) {
+
+							exception.printStackTrace();
+						}
+						this.world.repaint();
+						return;
+					}
+				}
+				world.getLevel()[this.yLoc][this.xLoc] = 4;
+				if (world.player.xLoc == this.xLoc
+						&& world.player.yLoc == this.yLoc) {
+					world.player.die();
+					world.getLevel()[8][5] = 3;
+				}
+				world.repaint();
+				return;
+			}
+		}
+		if (Math.abs(xDistance) < Math.abs(yDistance)) {
+			if (yDistance > 0) {
+				world.getLevel()[this.yLoc][this.xLoc] = 0;
+				this.yLoc++;
+				if (world.getLevel()[this.yLoc][this.xLoc] == 2) {
+					world.subtractEmerald();
+					if (this.world.getEmeralds() == 0) {
+						try {
+							Main.levelNumber++;
+							if (Main.levelNumber > 3) {
+								Main.levelNumber = 1;
+							}
+							this.world.changeLevelTo(Main.loadLevel("level"
+									+ (Main.levelNumber)));
+						} catch (IOException exception) {
+
+							exception.printStackTrace();
+						}
+						this.world.repaint();
+						return;
+					}
+				}
+				world.getLevel()[this.yLoc][this.xLoc] = 4;
+				if (world.player.xLoc == this.xLoc
+						&& world.player.yLoc == this.yLoc) {
+					world.player.die();
+					world.getLevel()[8][5] = 3;
+				}
+				world.repaint();
+				return;
+			}
+			if (yDistance < 0) {
+				world.getLevel()[this.yLoc][this.xLoc] = 0;
+				this.yLoc--;
+				if (world.getLevel()[this.yLoc][this.xLoc] == 2) {
+					world.subtractEmerald();
+					if (this.world.getEmeralds() == 0) {
+						try {
+							Main.levelNumber++;
+							if (Main.levelNumber > 3) {
+								Main.levelNumber = 1;
+							}
+							this.world.changeLevelTo(Main.loadLevel("level"
+									+ (Main.levelNumber)));
+						} catch (IOException exception) {
+
+							exception.printStackTrace();
+						}
+						this.world.repaint();
+						return;
+					}
+				}
+				world.getLevel()[this.yLoc][this.xLoc] = 4;
+				if (world.player.xLoc == this.xLoc
+						&& world.player.yLoc == this.yLoc) {
+					world.player.die();
+					world.getLevel()[8][5] = 3;
+				}
+				world.repaint();
+				return;
+			}
+		}
+
+		if (xDistance > 0) {
+			world.getLevel()[this.yLoc][this.xLoc] = 0;
+			this.xLoc++;
+			if (world.getLevel()[this.yLoc][this.xLoc] == 2) {
+				world.subtractEmerald();
+				if (this.world.getEmeralds() == 0) {
+					try {
+						Main.levelNumber++;
+						if (Main.levelNumber > 3) {
+							Main.levelNumber = 1;
+						}
+						this.world.changeLevelTo(Main.loadLevel("level"
+								+ (Main.levelNumber)));
+					} catch (IOException exception) {
+
+						exception.printStackTrace();
+					}
+					this.world.repaint();
+					return;
+				}
+			}
+			world.getLevel()[this.yLoc][this.xLoc] = 4;
+			if (world.player.xLoc == this.xLoc
+					&& world.player.yLoc == this.yLoc) {
+				world.player.die();
+				world.getLevel()[8][5] = 3;
+			}
+
+			world.repaint();
+			return;
+
+		}
+		if (yDistance < 0) {
+			world.getLevel()[this.yLoc][this.xLoc] = 0;
+			this.yLoc--;
+			if (world.getLevel()[this.yLoc][this.xLoc] == 2) {
+				world.subtractEmerald();
+				if (this.world.getEmeralds() == 0) {
+					try {
+						Main.levelNumber++;
+						if (Main.levelNumber > 3) {
+							Main.levelNumber = 1;
+						}
+						this.world.changeLevelTo(Main.loadLevel("level"
+								+ (Main.levelNumber)));
+					} catch (IOException exception) {
+
+						exception.printStackTrace();
+					}
+					this.world.repaint();
+					return;
+				}
+			}
+			world.getLevel()[this.yLoc][this.xLoc] = 4;
+			if (world.player.xLoc == this.xLoc
+					&& world.player.yLoc == this.yLoc) {
+				world.player.die();
+				world.getLevel()[8][5] = 3;
+			}
+			world.repaint();
+			return;
+		}
+		if (xDistance < 0) {
+			world.getLevel()[this.yLoc][this.xLoc] = 0;
+			this.xLoc--;
+			if (world.getLevel()[this.yLoc][this.xLoc] == 2) {
+				world.subtractEmerald();
+				if (this.world.getEmeralds() == 0) {
+					try {
+						Main.levelNumber++;
+						if (Main.levelNumber > 3) {
+							Main.levelNumber = 1;
+						}
+						this.world.changeLevelTo(Main.loadLevel("level"
+								+ (Main.levelNumber)));
+					} catch (IOException exception) {
+
+						exception.printStackTrace();
+					}
+					this.world.repaint();
+					return;
+				}
+			}
+			world.getLevel()[this.yLoc][this.xLoc] = 4;
+			if (world.player.xLoc == this.xLoc
+					&& world.player.yLoc == this.yLoc) {
+				world.player.die();
+				world.getLevel()[8][5] = 3;
+			}
+			world.repaint();
+			return;
+		}
+		if (yDistance > 0) {
+			world.getLevel()[this.yLoc][this.xLoc] = 0;
+			this.yLoc++;
+			if (world.getLevel()[this.yLoc][this.xLoc] == 2) {
+				world.subtractEmerald();
+				if (this.world.getEmeralds() == 0) {
+					try {
+						Main.levelNumber++;
+						if (Main.levelNumber > 3) {
+							Main.levelNumber = 1;
+						}
+						this.world.changeLevelTo(Main.loadLevel("level"
+								+ (Main.levelNumber)));
+					} catch (IOException exception) {
+
+						exception.printStackTrace();
+					}
+					this.world.repaint();
+					return;
+				}
+			}
+			world.getLevel()[this.yLoc][this.xLoc] = 4;
+			if (world.player.xLoc == this.xLoc
+					&& world.player.yLoc == this.yLoc) {
+				world.player.die();
+				world.getLevel()[8][5] = 3;
+			}
+			world.repaint();
+			return;
+		}
+		// the player is not on the board then they dance.
+		if (this.yLoc - 1 >= 0
+				&& world.getLevel()[this.yLoc - 1][this.xLoc] == 0) {
+			world.getLevel()[this.yLoc][this.xLoc] = 0;
+			this.yLoc--;
+			world.getLevel()[this.yLoc][this.xLoc] = 4;
+			if (world.player.xLoc == this.xLoc
+					&& world.player.yLoc == this.yLoc) {
+				world.player.die();
+				world.getLevel()[8][5] = 3;
+			}
+
+			return;
+		}
+		if (this.xLoc + 1 < world.getLevel()[this.yLoc].length
+				&& world.getLevel()[this.yLoc][this.xLoc + 1] == 0) {
+			world.getLevel()[this.yLoc][this.xLoc] = 0;
+			this.xLoc++;
+			world.getLevel()[this.yLoc][this.xLoc] = 4;
+			if (world.player.xLoc == this.xLoc
+					&& world.player.yLoc == this.yLoc) {
+				world.player.die();
+				world.getLevel()[8][5] = 3;
+			}
+
+			return;
+		}
+		if (this.yLoc + 1 < world.getLevel().length
+				&& world.getLevel()[this.yLoc + 1][this.xLoc] == 0) {
+			world.getLevel()[this.yLoc][this.xLoc] = 0;
+			this.yLoc++;
+			world.getLevel()[this.yLoc][this.xLoc] = 4;
+			if (world.player.xLoc == this.xLoc
+					&& world.player.yLoc == this.yLoc) {
+				world.player.die();
+				world.getLevel()[8][5] = 3;
+			}
+
+			return;
+		}
+		if (this.xLoc - 1 >= 0
+				&& world.getLevel()[this.yLoc][this.xLoc - 1] == 0) {
+			world.getLevel()[this.yLoc][this.xLoc] = 0;
+			this.xLoc--;
+			world.getLevel()[this.yLoc][this.xLoc] = 4;
+			if (world.player.xLoc == this.xLoc
+					&& world.player.yLoc == this.yLoc) {
+				world.player.die();
+				world.getLevel()[8][5] = 3;
+			}
+
+			return;
+		}
+
+	}
+	
+	/**
+	 * returns the number of the hobbin
+	 */
+
+	@Override
+	public int getType() {
+		return 4;
+
+	}
+
+}

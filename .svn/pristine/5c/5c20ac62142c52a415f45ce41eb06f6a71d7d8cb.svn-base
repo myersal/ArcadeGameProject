@@ -1,0 +1,31 @@
+import java.awt.geom.Point2D;
+
+
+
+public abstract class AbstractMover {
+	
+	protected Point2D startPoint;
+	protected boolean paused;
+	
+	
+	public AbstractMover(Point2D startPoint) {
+		this.startPoint = startPoint;
+		this.paused = false;
+		
+	}
+	
+	public boolean isPaused() {
+		return this.paused;
+	}
+	
+	public void updatePause() {
+		if (this.paused) {
+			this.paused = false;
+		}
+		else {
+			this.paused = true;
+		}
+
+	}
+
+}

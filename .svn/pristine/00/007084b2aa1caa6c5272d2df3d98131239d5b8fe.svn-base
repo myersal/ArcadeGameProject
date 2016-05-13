@@ -1,0 +1,33 @@
+
+
+//public abstract class AbstractMover {
+//	
+//	protected levelEnvironment world;
+//	protected Point2D startPoint;
+//	protected boolean paused;
+//	
+//	
+//	public AbstractMover(levelEnvironment world, Point2D startPoint) {
+//		this.world = world;
+//		this.startPoint = startPoint;
+//		this.paused = false;
+//		
+//	}
+//	
+//	public boolean isPaused() {
+//		return this.paused;
+//	}
+//	
+//	public void updatePause() {
+//		if (this.paused) {
+//			this.paused = false;
+//		}
+//		else {
+//			this.paused = true;
+//		}
+//	
+//	public void updatePosition();
+//
+//	}
+//
+//}

@@ -1,0 +1,8 @@
+
+public class AbstractItem extends AbstractOccupiedSpace {
+
+	public AbstractItem(int x, int y) {
+		super(x, y);
+	}
+
+}

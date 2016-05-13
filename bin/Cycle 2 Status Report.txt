@@ -1,0 +1,9 @@
+We estimated that it would take about 12 hours for each individual on cycle 1.
+
+Each individual put in about 15 hours of work for cycle 2.
+
+Some complications that we ran into were the complexity of the bullet
+ and the move methods for the different types of enemies. 
+ Another complication were we underestimated how long it would take to
+ figure out how to import images and display them on the canvas and then
+ move the images during animation.

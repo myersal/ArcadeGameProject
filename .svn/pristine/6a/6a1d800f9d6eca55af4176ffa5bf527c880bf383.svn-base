@@ -1,0 +1,23 @@
+import java.awt.geom.Point2D;
+
+public class Player extends AbstractCharacter {
+	protected Point2D currentPos;
+	protected double playerVelocity;
+
+	public Player() {
+		super(new Point2D.Double(300, 200));
+		this.currentPos = new Point2D.Double(300, 200);
+		this.playerVelocity = 10;
+	}
+
+	// only moves to the right currently, need to add listeners to change this.
+	public void updatePosition() {
+		this.currentPos = new Point2D.Double(this.currentPos.getX()
+				+ this.playerVelocity, this.currentPos.getY());
+	}
+	
+	public Point2D getPosition() {
+		return this.currentPos;
+	}
+
+}

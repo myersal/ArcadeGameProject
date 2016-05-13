@@ -1,0 +1,71 @@
+import java.awt.Color;
+import java.awt.Graphics2D;
+import java.awt.geom.Rectangle2D;
+
+/**
+ * 
+ * A class that creates the playable character and lets the player manipulate it.
+ *
+ * @author myersal.
+ *         Created Feb 6, 2015.
+ */
+
+public class Player extends AbstractCharacter {
+	private static final int BLOCK_WIDTH = 600 / 15;
+	private static final int BLOCK_HEIGHT = 400 / 10;
+
+	/**
+	 * 
+	 * Creates a player.
+	 *
+	 * @param x
+	 * @param y
+	 */
+	
+	public Player(int x, int y) {
+		super(x, y);
+
+	}
+
+	/**
+	 * 
+	 * Draws the playable character on the environment.
+	 *
+	 * @param g
+	 */
+	
+	protected void drawOn(Graphics2D g) {
+		Rectangle2D.Double space = new Rectangle2D.Double(super.xLoc
+				* BLOCK_WIDTH, super.yLoc * BLOCK_HEIGHT, BLOCK_WIDTH, BLOCK_HEIGHT);
+		g.setColor(Color.white);
+		g.fill(space);
+		Rectangle2D.Double man = new Rectangle2D.Double(super.xLoc
+				* BLOCK_WIDTH + 10, super.yLoc * BLOCK_HEIGHT + 10, BLOCK_WIDTH - 20, BLOCK_HEIGHT - 20);
+		g.setColor(Color.black);
+		g.fill(man);
+	}
+	
+	/**
+	 * 
+	 * Returns the Y location of the character.
+	 *
+	 * @return
+	 */
+	
+	public int getYLoc()
+	{
+		return this.yLoc;
+	}
+	
+	/**
+	 * 
+	 * Returns the X location of the character.
+	 *
+	 * @return
+	 */
+	
+	public int getXLoc()
+	{
+		return this.xLoc;
+	}
+}
